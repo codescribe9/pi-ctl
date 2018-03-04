@@ -34,13 +34,14 @@
 
         
         <div class="float-right">
-            <button id="shutdown-all" class="btn btn-danger">Shutdown All Slaves</button>
-            <button id="reboot-all" class="btn btn-danger">Reboot All Slaves</button>
+            <button id="restartTiles" class="btn btn-danger">Restart Tiles</button>
+            <button id="shutdownAll" class="btn btn-danger">Shutdown All Slaves</button>
+            <button id="rebootAll" class="btn btn-danger">Reboot All Slaves</button>
         </div>
         
         <div>
             {{#each data.videos}}
-            <img src="{{thumbnail}}" id="video-{{@index}}" alt="{{title}}" width="200px" height="200px" class="img-thumbnail piwall-video"> {{/each}}
+            <img src="{{thumbnail}}" id="video-{{@index}}" alt="{{title}}" width="120px"  class="img-thumbnail piwall-video"> {{/each}}
         </div>
     </div>
 

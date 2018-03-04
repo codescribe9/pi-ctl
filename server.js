@@ -51,6 +51,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', HomeController.index);
 app.get('/pies', PiesController.loadPiesInfo);
+app.get('/pi/video/:vid', PiesController.playVideo);
+app.get('/pi/restartTiles', PiesController.restartTiles);
 
 app.get('/admin', (req, res) => {
   res.render('admin', {})
