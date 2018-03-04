@@ -20,6 +20,9 @@
         <div>
             <i>{{ip}}</i>
         </div>
+        <div class="col-md-4 float-right" height="20px">
+            <div id="volumeRange"></div>
+        </div>
         <div class="btn-group btn-group-lg">
             <button type="button" class="btn btn-primary">9 Screens
                 <span class="fa fa-th"></span>
@@ -37,8 +40,9 @@
             <button id="restartTiles" class="btn btn-danger">Restart Tiles</button>
             <button id="shutdownAll" class="btn btn-danger">Shutdown All Slaves</button>
             <button id="rebootAll" class="btn btn-danger">Reboot All Slaves</button>
+            
         </div>
-        
+        <input type="checkbox" id="cbxConfirm" value="true" /><label for="cbxConfirm">Confirm</label>
         <div>
             {{#each data.videos}}
             <img src="{{thumbnail}}" id="video-{{@index}}" alt="{{title}}" width="120px"  class="img-thumbnail piwall-video"> {{/each}}

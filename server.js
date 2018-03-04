@@ -46,13 +46,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(methodOverride('_method'));
 app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true }));
-app.use(flash());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash())
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', HomeController.index);
-app.get('/pies', PiesController.loadPiesInfo);
-app.get('/pi/video/:vid', PiesController.playVideo);
-app.get('/pi/restartTiles', PiesController.restartTiles);
+app.get('/', HomeController.index)
+app.get('/pies', PiesController.loadPiesInfo)
+app.get('/pi/audio/:vol', PiesController.adjustVolume)
+app.get('/pi/video/:vid', PiesController.playVideo)
+app.get('/pi/restartTiles', PiesController.restartTiles)
+app.get('/pi/shutdownSlaves', PiesController.shutdownSlaves)
+app.get('/pi/rebootSlaves', PiesController.rebootSlaves)
+
 
 app.get('/admin', (req, res) => {
   res.render('admin', {})

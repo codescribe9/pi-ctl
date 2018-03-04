@@ -7,6 +7,24 @@ exports.restartTiles = function(req, res){
   shell.exec('../starttiles.sh;', {async:true})
   res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({'result': 'restarted tiles'}))
+  }
+  
+  exports.shutdownSlaves = function(req, res){
+  shell.exec('../shutdownSlaves.sh;', {async:true})
+  res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({'result': 'shutdown slaves'}))
+  }
+  
+  exports.rebootSlaves = function(req, res){
+  shell.exec('../rebootSlaves.sh;', {async:true})
+  res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({'result': 'rebooted slaves'}))
+}
+
+exports.adjustVolume = function(req, res) {
+    var child = shell.exec('../adjv.sh ' + req.params.vol, {async:true})
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({'result': 'adjusted volumne, new volume: ' + req.params.vol}))
 }
 
 exports.playVideo = function(req, res){
