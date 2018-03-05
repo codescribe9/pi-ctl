@@ -2,6 +2,48 @@ var shell = require('shelljs');
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
+const { Client } = require('tplink-smarthome-api');
+
+const client = new Client();
+
+// client.startDiscovery().on('device-new', (device) => {
+//   device.getSysInfo().then(console.log);
+//   console.log(device.host)
+// });
+
+exports.getPowerState = function(req, res){
+  var powerState = false;
+  const plug = client.getDevice({ host:'192.168.1.243' }).then((device)=>{
+  device.getPowerState().then((powerState)=>{
+    console.log('powerState', powerState)
+res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({'power': powerState}))
+
+  }).catch((err1) => {
+  console.log('Error', err1)
+})
+  
+}).catch((err2) => {
+  console.log('Error', err2)
+})
+  }
+
+exports.togglePower = function(req, res){
+  const plug = client.getDevice({ host:'192.168.1.243' }).then((device)=>{
+  //device.getSysInfo().then(console.log);  
+  device.togglePowerState().then(()=>{
+res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({'result': 'power tiles'}))
+  }).catch((err1) => {
+  console.log('Error', err1)
+})
+}).catch((err) => {
+  console.log('Error', err)
+})
+
+  
+  }
+
 
 exports.restartTiles = function(req, res){
   shell.exec('../starttiles.sh;', {async:true})

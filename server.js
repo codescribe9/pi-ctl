@@ -56,6 +56,8 @@ app.get('/pi/video/:vid', PiesController.playVideo)
 app.get('/pi/restartTiles', PiesController.restartTiles)
 app.get('/pi/shutdownSlaves', PiesController.shutdownSlaves)
 app.get('/pi/rebootSlaves', PiesController.rebootSlaves)
+app.get('/pi/getPowerState', PiesController.getPowerState)
+app.get('/pi/togglePower', PiesController.togglePower)
 
 
 app.get('/admin', (req, res) => {

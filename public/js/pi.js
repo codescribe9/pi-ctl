@@ -81,5 +81,35 @@ noUiSlider.create(range, {
         return false
     })
 
+    $('#togglePower').on('click', function(event){
+        if($('#cbxConfirm').prop("checked")) {
+             $('#cbxConfirm').prop("checked", false)
+            $.get('pi/togglePower', (data)=>{
+                console.log(data)
+                updatePowerState()
+            })
+        }
+        //event.stopPropagation();
+        return false
+    })
+
+    var updatePowerState = function() {
+     $.get('pi/getPowerState', (data)=>{
+            console.log(data)
+            var but = $('#togglePower')
+
+            but.removeClass('btn-danger').removeClass('btn-success')
+            if(data.power == true) {
+                but.text('Power off').addClass('btn-danger')
+            }
+            else {
+                but.text('Power on').addClass('btn-success')
+            }            
+        })
+    }
+
+    updatePowerState();
+
+
   })
   
