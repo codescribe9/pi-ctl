@@ -53,11 +53,13 @@ app.get('/', HomeController.index)
 app.get('/pies', PiesController.loadPiesInfo)
 app.get('/pi/audio/:vol', PiesController.adjustVolume)
 app.get('/pi/video/:vid', PiesController.playVideo)
-app.get('/pi/restartTiles', PiesController.restartTiles)
+app.get('/pi/restartTiles/:num', PiesController.restartTiles)
 app.get('/pi/shutdownSlaves', PiesController.shutdownSlaves)
 app.get('/pi/rebootSlaves', PiesController.rebootSlaves)
 app.get('/pi/getPowerState', PiesController.getPowerState)
 app.get('/pi/togglePower', PiesController.togglePower)
+app.get('/pi/screens/:num', PiesController.toggleScreens)
+
 
 
 app.get('/admin', (req, res) => {
