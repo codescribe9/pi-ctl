@@ -104,7 +104,12 @@ exports.loadPiesInfo = function (req, res) {
     macro: "K8rpo9e7tvg",
     "4k": "3xGJZoaTODQ",
     landscapes: "9ZfN87gSjvI",
-    canada: "5lWkZ-JaEOc"
+    canada: "5lWkZ-JaEOc",
+    iss: "oFDeNcu3mnc",
+    iceland: "bYVebL_BYqo",
+    norway: "fq-ywVIg2A8",
+    tajmahal: "DMtsWSptQQw",
+
   }
 
   var videoPath = '/home/pi/Videos'
