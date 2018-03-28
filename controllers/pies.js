@@ -89,6 +89,19 @@ exports.restartTiles = function(req, res){
     res.send(JSON.stringify({'result': 'rebooted slaves'}))
 }
 
+exports.shutdownMaster = function(req, res){
+  shell.exec('sleep 2; sudo shutdown -h now;', {async:true})
+  res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({'result': 'shutdown master'}))
+  }
+  
+  exports.rebootMaster = function(req, res){
+    shell.exec('sleep 2; sudo reboot -h now;', {async:true})
+    res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({'result': 'reboot master'}))
+    }
+
+
 exports.adjustVolume = function(req, res) {
     var child = shell.exec('../adjv.sh ' + req.params.vol, {async:true})
     res.setHeader('Content-Type', 'application/json');

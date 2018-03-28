@@ -75,13 +75,13 @@
                             <div id="divConfirm" class="">
                                 <input type="checkbox" id="cbxConfirm" value="true" /><label for="cbxConfirm">Confirm</label>
                             </div>
-                              <button href="#" id="btnVideo" type="button" class="btn btn-default">
+                              <button href="#" id="btnVideo" type="button" class="btn btn-default"  title="Start Playlist">
                                   <span class="fa fa-video"></span>
                               </button>
                             
                                 <button id="btnAdjustVolume" type="button" class="btn btn-secondary"
                                    data-container="body" data-toggle="popover" data-placement="bottom"
-                                   data-trigger="click" title="Volume Control" data-content=
+                                   data-trigger="click" title="Adjust volume on PiMaster" data-content=
                                 "<div class='mt-4'>
                                     <input id='txtVolume' class='pl-1 pr-2' data-slider-id='txtVolumeSlider' type='text' data-slider-min='0' data-slider-max='100' data-slider-step='5' data-slider-value='30'/>
                                     <button href='#' id='btnPiMasterVolumeMute' type='button' class='btn btn-default btn-sm'>
@@ -92,10 +92,10 @@
                                     <span class="fa fa-microphone"></span>
                                 </button>  
                              
-                              <button href="#" role="button" class="btn btn-danger">
+                              <button id="btnPiMasterShutdown" href="#" role="button" class="btn btn-danger" title="Shutdown PiMaster">
                                   <span class="fa fa-power-off"></span>
                               </button>
-                              <button href="#" role="button" class="btn btn-danger">
+                              <button id="btnPiMasterReboot" href="#" role="button" class="btn btn-danger" title="Reboot PiMaster">
                                   <span class="fa fa-redo-alt"></span>
                               </button>
                           </div>

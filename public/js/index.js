@@ -151,6 +151,28 @@ $(function() {
         })
     }
 
+
+    $('#btnPiMasterShutdown').on('click', function(event){
+        if($('#cbxConfirm').prop("checked")) {
+            $('#cbxConfirm').prop("checked", false)
+           $.get('pi/shutdownMaster', (data)=>{
+               console.log(data)
+           })
+        }
+       return false
+   })
+
+   $('#btnPiMasterReboot').on('click', function(event){
+    if($('#cbxConfirm').prop("checked")) {
+        $('#cbxConfirm').prop("checked", false)
+       $.get('pi/rebootMaster', (data)=>{
+           console.log(data)
+       })
+    }
+   return false
+})
+
+
     //$('#divCurrentYear').text((new Date()).getFullYear());    
     var daysTill = getDaysTill(12, 31)
     $('#divDaysInYear').text(daysTill);
