@@ -1,0 +1,9 @@
+/* your styles go here */
+.btn-toolbar button {
+    margin-left: 10px;
+}
+
+.slider-selection {
+	background: #BABABA;
+}
+.tooltip.tooltip-main { opacity: 1 !important; }

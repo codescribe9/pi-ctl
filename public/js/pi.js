@@ -1,5 +1,21 @@
 $(function() {
+    $('#btnAdjustVolume').on('click', function(){
+        $('#divAdjustVolume')
+    })
+
     // Your custom JavaScript goes here
+    $('#piMasterVolumeMute').on('click', function(){
+        var childSpan = $('#spVolumeLevel');
+        childSpan.removeClass('fa-volume-up').toggleClass('fa-volume-on').toggleClass('fa-volume-off');
+
+        var vol = childSpan.hasClass('fa-microphone-slash') ? 0 : 30;
+        console.log(this.id, childSpan.hasClass('fa-microphone-slash'))
+
+         $.get('pi/audio/' + vol, (data)=>{
+            console.log(data)
+        })
+    })
+    
     $('#pimaster-volume-mute').on('click', function(){
         var childSpan = $(this).find('span');
         childSpan.toggleClass('fa-microphone').toggleClass('fa-microphone-slash');
