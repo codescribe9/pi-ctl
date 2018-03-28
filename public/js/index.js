@@ -1,5 +1,39 @@
 $(function() {
 
+    var volSlider;
+    // Volume Control
+
+    $('#btnAdjustVolume').popover({ html : true});
+
+    $('#btnAdjustVolume').on('inserted.bs.popover', function () {
+        setTimeout(() => {
+            
+            volSlider = $('#txtVolume')
+                .slider({
+                    tooltip: 'always',
+                    focus: true,
+                    formatter: function(value) {
+                        return value;
+                    }
+                })
+                .on('slide', volChange)
+
+            $('#btnPiMasterVolumeMute').on('click', function (){                
+                // Apply setValue to redraw slider
+                volSlider.slider('setValue', 0);
+                volChange();
+            })
+        }, 100);
+        
+      })
+
+    var volChange = function() {
+        var vol = volSlider.slider('getValue')
+         $.get('pi/audio/' + vol, (data)=>{
+            console.log(data)
+        })
+    }
+
     const gids = [
         slow= "zrPphZ4WJxc",
         italy= "f-9ijiN31LI",
@@ -33,49 +67,8 @@ $(function() {
 
     $('#divVideoList').html(videoHtml);
     
-    //$('[data-toggle="popover"]').popover({ html : true})
 
-    $('#btnAdjustVolume').on('click', function (){
-        $('#divAdjustVolume').toggleClass('d-none')
-    })
-
-    $('#btnPiMasterVolumeMute').on('click', function (){                
-        // Apply setValue to redraw slider
-        volSlider.slider('setValue', 0);
-    })
-
-    var volSlider =  $('#txtVolume').slider({
-            focus: true,
-            formatter: function(value) {
-                return  value;
-            }
-        })
-    
-        // var vol = childSpan.hasClass('fa-microphone-slash') ? 0 : 30;
-        // console.log(this.id, childSpan.hasClass('fa-microphone-slash'))
-
-        //  $.get('pi/audio/' + vol, (data)=>{
-        //     console.log(data)
-        // })
-
-
-    // $('#btnAdjustVolume').popover({ html : true,
-    //     content: function() {
-    //         return $('#divAdjustVolume').html();
-    //       }
-    // })
-
-
-    // $('#btnAdjustVolume').on('inserted.bs.popover', function () {
-    //     $('#txtVolume').slider({
-    //         tooltip: 'always',
-    //         focus: true,
-    //         formatter: function(value) {
-    //             return value;
-    //         }
-    //     })        
-    //   })
-    
+      
 
         //start playing the clicked video
     $('.piwall-video').on('click', function(event){        
@@ -158,5 +151,28 @@ $(function() {
         })
     }
 
+    //$('#divCurrentYear').text((new Date()).getFullYear());    
+    var daysTill = getDaysTill(12, 31)
+    $('#divDaysInYear').text(daysTill);
+
+    $('#divDaysToBirthday1').text(getDaysTill(6, 27));
+    $('#divDaysToBirthday2').text(getDaysTill(8, 15));
+    $('#divDaysToBirthday3').text(getDaysTill(6, 20));
+    $('#divDaysToBirthday4').text(getDaysTill(11, 5));
+
     updatePowerState();        
 })
+
+function getDaysTill(month, day){
+    today = new Date();
+    var currentYear = today.getFullYear();
+    var inputData = new Date(currentYear, month - 1, day);
+    
+    if (today.getMonth() >= month  && today.getDate() >= date) 
+    {
+        inputData.setFullYear(currentYear + 1); 
+    } 
+
+    var oneDay =1000*60*60*24;
+    return Math.ceil((inputData.getTime() - today.getTime()) / oneDay) 
+}

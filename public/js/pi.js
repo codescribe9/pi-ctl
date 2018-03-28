@@ -140,6 +140,9 @@ noUiSlider.create(range, {
         })
     }
 
+
+    
+
     updatePowerState();
   })
   
