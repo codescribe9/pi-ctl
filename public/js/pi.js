@@ -1,5 +1,21 @@
 $(function() {
+    $('#btnAdjustVolume').on('click', function(){
+        $('#divAdjustVolume')
+    })
+
     // Your custom JavaScript goes here
+    $('#piMasterVolumeMute').on('click', function(){
+        var childSpan = $('#spVolumeLevel');
+        childSpan.removeClass('fa-volume-up').toggleClass('fa-volume-on').toggleClass('fa-volume-off');
+
+        var vol = childSpan.hasClass('fa-microphone-slash') ? 0 : 30;
+        console.log(this.id, childSpan.hasClass('fa-microphone-slash'))
+
+         $.get('pi/audio/' + vol, (data)=>{
+            console.log(data)
+        })
+    })
+    
     $('#pimaster-volume-mute').on('click', function(){
         var childSpan = $(this).find('span');
         childSpan.toggleClass('fa-microphone').toggleClass('fa-microphone-slash');
@@ -15,7 +31,7 @@ $(function() {
 
 
     $('.piwall-video').on('click', function(event){        
-        $.get('pi/video/'+this.alt, (data)=>{
+        $.get('pi/video/' + this.alt, (data)=>{
             console.log(data)
         })
         //event.stopPropagation();
@@ -24,7 +40,9 @@ $(function() {
 
 
     $('#restartTiles').on('click', function(event){        
-        $.get('pi/restartTiles', (data)=>{
+        var num = $('.btn-toggle-screens.active').attr("screens")
+
+        $.get(`pi/restartTiles/${num}`, (data)=>{
             console.log(data)
         })
         //event.stopPropagation();
@@ -58,6 +76,20 @@ noUiSlider.create(range, {
         })
     })
 
+
+    $('.btn-toggle-screens').on('click', function(event){
+        if($('#cbxConfirm').prop("checked")) {
+             $('#cbxConfirm').prop("checked", false)
+             var num = $(this).attr("screens")
+             $('.btn-toggle-screens').removeClass("active")
+             $(this).addClass("active")
+            $.get('pi/screens/' + num, (data) => {
+                console.log(data)                
+            })
+        }
+        //event.stopPropagation();
+        return false
+    })
     
      $('#shutdownAll').on('click', function(event){
          if($('#cbxConfirm').prop("checked")) {
@@ -108,8 +140,9 @@ noUiSlider.create(range, {
         })
     }
 
+
+    
+
     updatePowerState();
-
-
   })
   

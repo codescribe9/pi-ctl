@@ -29,26 +29,52 @@ res.setHeader('Content-Type', 'application/json');
   }
 
 exports.togglePower = function(req, res){
-  const plug = client.getDevice({ host:'192.168.1.243' }).then((device)=>{
-  //device.getSysInfo().then(console.log);  
-  device.togglePowerState().then(()=>{
-res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({'result': 'power tiles'}))
-  }).catch((err1) => {
-  console.log('Error', err1)
-})
-}).catch((err) => {
-  console.log('Error', err)
-})
-
-  
+    const plug = client.getDevice({ host:'192.168.1.243' }).then((device)=>{
+    //device.getSysInfo().then(console.log);  
+    device.togglePowerState().then(() => {
+      res.setHeader('Content-Type', 'application/json');
+      res.send(
+        JSON.stringify({'result': 'power tiles'}))
+      }).catch((err1) => {
+        console.log('Error', err1)
+      })
+    }).catch((err) => {
+      console.log('Error', err)
+    })
   }
 
+  
+exports.toggleScreens = function(req, res){
+   console.log('Toggling screens', req.params.num)
+   switch(req.params.num){
+     case '9':
+     console.log('Toggling 9 screens')
+      shell.exec('../enablePiwall9.sh;', // {async:true})
+           function(code, stdout, stderr) {
+            console.log('Exit code:', code);
+            console.log('Program output:', stdout);
+            console.log('Program stderr:', stderr);
+          });
+          break;
+    case '4':
+     shell.exec('../enablePiwall4.sh;', {async:true})
+     break;
+     case '1':
+     shell.exec('../starttiles.sh 1; ../runSolo.sh 9', {async:true})
+     break;
+   }
+   
+
+   res.setHeader('Content-Type', 'application/json');
+   res.send(JSON.stringify({'result': `configured the screen to ${req.params.num} tiles`}))
+}
 
 exports.restartTiles = function(req, res){
-  shell.exec('../starttiles.sh;', {async:true})
+
+  shell.exec(`../starttiles.sh ${req.params.num};`, {async:true})
+  
   res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({'result': 'restarted tiles'}))
+    res.send(JSON.stringify({'result': `restarted ${req.params.num} tiles`}))
   }
   
   exports.shutdownSlaves = function(req, res){
@@ -62,6 +88,19 @@ exports.restartTiles = function(req, res){
   res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({'result': 'rebooted slaves'}))
 }
+
+exports.shutdownMaster = function(req, res){
+  shell.exec('sleep 2; sudo shutdown -h now;', {async:true})
+  res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({'result': 'shutdown master'}))
+  }
+  
+  exports.rebootMaster = function(req, res){
+    shell.exec('sleep 2; sudo reboot -h now;', {async:true})
+    res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({'result': 'reboot master'}))
+    }
+
 
 exports.adjustVolume = function(req, res) {
     var child = shell.exec('../adjv.sh ' + req.params.vol, {async:true})
@@ -104,7 +143,12 @@ exports.loadPiesInfo = function (req, res) {
     macro: "K8rpo9e7tvg",
     "4k": "3xGJZoaTODQ",
     landscapes: "9ZfN87gSjvI",
-    canada: "5lWkZ-JaEOc"
+    canada: "5lWkZ-JaEOc",
+    iss: "oFDeNcu3mnc",
+    iceland: "bYVebL_BYqo",
+    norway: "fq-ywVIg2A8",
+    tajmahal: "DMtsWSptQQw",
+
   }
 
   var videoPath = '/home/pi/Videos'
