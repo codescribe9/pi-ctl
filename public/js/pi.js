@@ -30,8 +30,11 @@ $(function() {
 
 
 
-    $('.piwall-video').on('click', function(event){        
-        $.get('pi/video/' + this.alt, (data)=>{
+    $('.piwall-video').on('click', function(event) {
+        
+        var num = $('.btn-toggle-screens.active').attr("screens")
+
+        $.get(`pi/video/${this.alt}/${num}`, (data)=>{
             console.log(data)
         })
         //event.stopPropagation();

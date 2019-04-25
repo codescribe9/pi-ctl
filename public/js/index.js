@@ -3,6 +3,12 @@ $(function() {
     var volSlider;
     // Volume Control
 
+     var volChange = function(vol) {
+         $.get('pi/audio/' + vol, (data)=>{
+            console.log(data)
+        })
+    }
+
     $('#btnAdjustVolume').popover({ html : true});
 
     $('#btnAdjustVolume').on('inserted.bs.popover', function () {
@@ -16,49 +22,49 @@ $(function() {
                         return value;
                     }
                 })
-                .on('slide', volChange)
+
+                $("#txtVolume").on("change", function(changeEvt) {
+                    console.log(changeEvt)
+                    volChange(changeEvt.value.newValue);
+                });
+            
 
             $('#btnPiMasterVolumeMute').on('click', function (){                
                 // Apply setValue to redraw slider
-                volSlider.slider('setValue', 0);
-                volChange();
+                volSlider.slider('setValue', 0, true, true);
+                //volChange(0);
             })
         }, 100);
         
       })
 
-    var volChange = function() {
-        var vol = volSlider.slider('getValue')
-         $.get('pi/audio/' + vol, (data)=>{
-            console.log(data)
-        })
-    }
+   
 
-    const gids = [
-        slow= "zrPphZ4WJxc",
-        italy= "f-9ijiN31LI",
-        ireland= "eyA2WaUw0gI",
-        light= "E8Ecz_sntDo",
-        wildlife= "TxbE79-1OSI",
-        ink= "BmBh0NNEm00",
-        hubble= "R5bkXdiVDg4",
-        world= "tO01J-M3g0U",
-        drone2017= "Ay5JlGvHDag",
-        patagonia= "ChOhcHD8fBA",
-        sony= "jyzexrN0m40",
-        new1 = "uzpxrx7NZBA",
-        scotland= "KA_CLal14u4",
-        rio= "Mat2sUGDspU",
-        planet= "KgMpKsp23yY",
-        macro= "K8rpo9e7tvg",
-        Fourk= "3xGJZoaTODQ",
-        landscapes= "9ZfN87gSjvI",
-        canada= "5lWkZ-JaEOc",
-        iss= "oFDeNcu3mnc",
-        iceland= "bYVebL_BYqo",
-        norway= "fq-ywVIg2A8",
-        tajmahal= "DMtsWSptQQw",    
-    ];
+    const gids = {
+        slow: "zrPphZ4WJxc",
+        italy: "f-9ijiN31LI",
+        ireland: "eyA2WaUw0gI",
+        light: "E8Ecz_sntDo",
+        wildlife: "TxbE79-1OSI",
+        ink: "BmBh0NNEm00",
+        hubble: "R5bkXdiVDg4",
+        world: "tO01J-M3g0U",
+        drone2017: "Ay5JlGvHDag",
+        patagonia: "ChOhcHD8fBA",
+        sony: "jyzexrN0m40",
+        'new' : "uzpxrx7NZBA",
+        scotland: "KA_CLal14u4",
+        rio: "Mat2sUGDspU",
+        planet: "KgMpKsp23yY",
+        macro: "K8rpo9e7tvg",
+        '4k': "3xGJZoaTODQ",
+        landscapes: "9ZfN87gSjvI",
+        canada: "5lWkZ-JaEOc",
+        iss: "oFDeNcu3mnc",
+        iceland: "bYVebL_BYqo",
+        norway: "fq-ywVIg2A8",
+        tajmahal: "DMtsWSptQQw"
+};
 
     var videoHtml = '';
     $.each(gids, function(key, value){
@@ -72,7 +78,8 @@ $(function() {
 
         //start playing the clicked video
     $('.piwall-video').on('click', function(event){        
-        $.get('pi/video/' + this.alt, (data)=>{
+        var num = $('.btn-toggle-screens.active').attr("screens")
+        $.get(`pi/video/${this.alt}/${num}`, (data)=>{        
             console.log(data)
         })
         return false

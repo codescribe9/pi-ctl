@@ -103,7 +103,8 @@ exports.shutdownMaster = function(req, res){
 
 
 exports.adjustVolume = function(req, res) {
-    var child = shell.exec('../adjv.sh ' + req.params.vol, {async:true})
+    var vol = req.params.vol == 5 ? '05' : req.params.vol;
+    var child = shell.exec('../adjv.sh ' + vol, {async:true})
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({'result': 'adjusted volumne, new volume: ' + req.params.vol}))
 }
@@ -115,7 +116,8 @@ exports.playVideo = function(req, res){
     // }
       
 
-    var child = shell.exec('../vm.sh ' + req.params.vid, {async:true})
+    //var child = shell.exec(`../starttiles.sh ${req.params.num}; ../vm.sh ${req.params.vid}`, {async:true})
+    var child = shell.exec(`../vm.sh ${req.params.vid}`, {async:true})
 
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({'result': 'started playing video: ' + req.params.vid}))
